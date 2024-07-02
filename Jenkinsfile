@@ -1,24 +1,32 @@
-# Fetching the latest node image on apline linux
-FROM node:alpine AS builder
-
-# Setting up the work directory
-WORKDIR /app
-
-# Installing dependencies
-COPY ./package*.json ./ 
-RUN npm install
-
-# Copying all the files in our project
-COPY . .
-
-# Building our application
-RUN npm run build
-
-# Fetching the latest nginx image
-FROM nginx:latest
-
-# Copying built assets from builder
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Copying our nginx.conf
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+pipeline {
+    agent {
+        label 'agent-via-ssh'
+    }
+    environment {
+        compose_service_name = "react-jenkins-docker"
+        workspace = "/home/jenkins/project/react-jenkins-docker/"
+    }
+    stages {
+        stage('Checkout Source') {
+            steps {
+                ws("${workspace}") {
+                    checkout scm
+                }
+            }
+        }
+        stage('Docker Comopse Build') {
+            steps {
+                ws("${workspace}"){
+                    sh "docker compose build --no-cache ${compose_service_name}"
+                }
+            }
+        }
+        stage('Docker Comopse Up') {
+            steps {
+                ws("${workspace}"){
+                    sh "docker compose up --no-deps -d ${compose_service_name}"
+                }
+            }
+        }
+    }
+}
