@@ -12,16 +12,6 @@ pipeline {
                 }
             }
         }
-        stage('npm install'){
-            steps {
-                sh "npm install"
-            }
-        }
-        stage('npm run build'){
-            steps{
-                sh "npm run build"
-            }
-        }
         stage('Docker Comopse Build') {
             steps {
                 ws("${workspace}"){
