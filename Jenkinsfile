@@ -1,29 +1,23 @@
 pipeline {
     agent any
-    environment {
-        compose_service_name = "react-jenkins-docker"
-        workspace = "/home/jenkins/project/react-jenkins-docker/"
-    }
     stages {
         stage('Checkout Source') {
             steps {
-                ws("${workspace}") {
-                    checkout scm
-                }
+                checkout scm
+                sh "pwd"
+                sh "ls -ltr"
             }
         }
         stage('Docker Comopse Build') {
             steps {
-                ws("${workspace}"){
-                    sh "docker compose build ${compose_service_name}"
-                }
+                echo "docker compose build"
+                sh "docker compose build"
             }
         }
         stage('Docker Comopse Up') {
             steps {
-                ws("${workspace}"){
-                    sh "docker compose up --no-deps -d ${compose_service_name}"
-                }
+                echo "docker compose running"
+                sh "docker compose up -d"
             }
         }
     }
