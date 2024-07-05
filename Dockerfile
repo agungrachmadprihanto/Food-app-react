@@ -1,9 +1,9 @@
 # Step 1: Build the React application
-FROM node:14 AS build
+FROM node:14-alpine as build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
-COPY . ./
+COPY . .
 RUN npm run build
 
 # Step 2: Serve the application using Nginx
