@@ -1,10 +1,8 @@
 version: '3'
+
 services:
   react-jenkins-docker:
-    container_name: react-jenkins-docker
-    build:
-      context: .
-      dockerfile: Dockerfile
-      image: nginx:latest
+    image: nginx:latest
     ports:
       - "80:80"
+    restart: always
