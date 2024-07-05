@@ -2,7 +2,6 @@
 FROM node:20-alpine as build
 WORKDIR /var/lib/jenkins/workspace/Food-App-Project
 COPY package.json package-lock.json ./
-RUN npm install
 COPY . .
 RUN npm run build
 
