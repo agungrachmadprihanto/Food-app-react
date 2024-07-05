@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = 'food-app'        
-        CURRENT_IMAGE_TAG = "latest-${env.BUILD_NUMBER}"
     }
     stages {
         stage('Checkout Source') {
@@ -20,9 +19,7 @@ pipeline {
                 script {
                     echo "Building Docker image"
                     try {
-                        PREVIOUS_IMAGE_TAG = sh(script: "docker images -q ${DOCKER_IMAGE}:latest", returnStdout: true).trim()
-                        sh "docker build -t ${DOCKER_IMAGE}:${CURRENT_IMAGE_TAG} ."
-                        sh "docker tag ${DOCKER_IMAGE}:${CURRENT_IMAGE_TAG} ${DOCKER_IMAGE}:latest"
+                        sh "docker build -t ${DOCKER_IMAGE} ."
                     } catch (Exception e) {
                         error "Docker build failed: ${e.getMessage()}"
                     }
