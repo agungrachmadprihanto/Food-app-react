@@ -11,13 +11,13 @@ pipeline {
         stage('Docker Comopse Build') {
             steps {
                 echo "docker compose build"
-                sh "docker compose build"
+                sh "docker build -t nginx ."
             }
         }
         stage('Docker Comopse Up') {
             steps {
                 echo "docker compose running"
-                sh "docker compose up -d"
+                sh "docker compose up -d nginx"
             }
         }
     }
