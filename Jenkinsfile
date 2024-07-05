@@ -39,22 +39,4 @@ pipeline {
             }
         }
     }
-    post {
-        failure {
-            script {
-                echo "Rollback due to failure"
-                try {
-                    if (PREVIOUS_IMAGE_TAG) {
-                        sh "docker tag ${PREVIOUS_IMAGE_TAG} ${DOCKER_IMAGE}:latest"
-                        sh "docker compose down"
-                        sh "docker compose up -d ${DOCKER_IMAGE}"
-                    } else {
-                        echo "No previous image found to rollback"
-                    }
-                } catch (Exception e) {
-                    echo "Rollback failed: ${e.getMessage()}"
-                }
-            }
-        }
-    }
 }
