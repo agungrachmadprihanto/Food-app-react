@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:14 AS build
+FROM nginx:alpine
 
 # Install dependencies
 RUN npm install
@@ -10,11 +10,8 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Stage 2: Serve the React app with Nginx
-FROM nginx:alpine
-
 # Copy the build output to Nginx html directory
-COPY --from=build ./build /usr/share/nginx/html
+COPY --from=build /build /usr/share/nginx/html
 
 # Copy custom Nginx configuration file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
