@@ -1,5 +1,5 @@
 # Step 1: Build the React application
-FROM node:20-alpine as build
+FROM node:18-alpine as build
 WORKDIR /var/lib/jenkins/workspace/food-app
 COPY package.json package-lock.json ./
 RUN npm install
