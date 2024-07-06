@@ -20,6 +20,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-content-center">
+          <h2>MY FOOOD</h2>
           <ul>
             <li>Home</li>
             <li>About us</li>
@@ -35,6 +36,7 @@ const Footer = () => {
           </ul>
         </div>
       </div>
+      <hr></hr>
       <p className="footer-copyright">
         copyright 2024 hello.com - All Right Reserved.
       </p>
