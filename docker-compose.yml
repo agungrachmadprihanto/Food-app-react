@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  react-jenkins-docker:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    restart: always
