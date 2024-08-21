@@ -3,7 +3,8 @@ import "./Cart.css";
 import { StoreContext } from "../../Context/StoreContext";
 
 const Cart = () => {
-  const { cartItem, food_list, removeFromCart } = useContext(StoreContext);
+  const { cartItem, food_list, removeFromCart, getTotalCartAmount } =
+    useContext(StoreContext);
 
   return (
     <div className="cart">
@@ -21,18 +22,55 @@ const Cart = () => {
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
             return (
-              <div className="cart-items-title cart-items-item" key={item._id}>
-                <img src={item.image}></img>
-                <p>{item.name}</p>
-                <p>{item.price}</p>
-                <p>{cartItem[item._id]}</p>
-                <p>{item.price * cartItem[item._id]}</p>
-                <p>x</p>
+              <div>
+                <div
+                  className="cart-items-title cart-items-item"
+                  key={item._id}>
+                  <img src={item.image}></img>
+                  <p>{item.name}</p>
+                  <p>${item.price}</p>
+                  <p>{cartItem[item._id]}</p>
+                  <p>${item.price * cartItem[item._id]}</p>
+                  <p onClick={() => removeFromCart(item._id)} className="cross">
+                    x
+                  </p>
+                </div>
+                <hr />
               </div>
             );
           }
-          return null;
         })}
+      </div>
+      <div className="cart-bottom">
+        <div className="cart-total">
+          <h2>Cart Total</h2>
+          <div>
+            <div className="cart-total-details">
+              <p>Subtotal</p>
+              <p>${getTotalCartAmount()}</p>
+            </div>
+            <hr />
+            <div className="cart-total-details">
+              <p>Delivery Fee</p>
+              <p>{2}</p>
+            </div>
+            <hr />
+            <div className="cart-total-details">
+              <b>Total</b>
+              <b>${getTotalCartAmount() + 2}</b>
+            </div>
+          </div>
+          <button>Checkout</button>
+        </div>
+        <div className="cart-promocode">
+          <div>
+            <p>If you have a promo code, Enter it here</p>
+            <div className="cart-promocode-input">
+              <input type="text" placeholder="promo code"></input>
+              <button>Submit</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
